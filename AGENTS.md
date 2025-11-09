@@ -416,10 +416,15 @@ After completing the market screening and building the final JSON file:
    ```
 
 **Important Notes:**
-* The notification step **must not** block the main flow; log errors and continue if sending fails
-* Never print secrets in logs; tokens only come from environment variables
-* Outside trading hours, still post with **WATCH** by session rule
-* Keep Telegram posts compact: 1 bullet per item with "symbol — VIEW — score — 1-liner"
+- The notification step **must not** block the main flow; log errors and continue if sending fails
+- Never print secrets in logs; tokens only come from environment variables
+- Outside trading hours, still post with **WATCH** by session rule
+- Telegram posts are now detailed and include per‑item:
+  - `symbol — VIEW — Score X/7`
+  - Headline with clickable link
+  - Metrics line when available: `LTP`, `ΔVWAP`, `RS`, `OIR`, `near_high/52W`, `circuit_prox`, `chg%` (fields shown only if present)
+  - One‑line rationale
+  - Messages use MarkdownV2 with safe chunking at 4096 chars
 
 ---
 
@@ -431,5 +436,4 @@ After completing the market screening and building the final JSON file:
 4. Output **BUY / WATCH / AVOID** with **intraday score (X/7)** + **two signals + one narrative line that references the score**.
 5. **Always show the intraday score to the user** in your final output.
 6. **Build `artifacts/market_items.json`** and **send Telegram notification** (load `.env` first, use `notify_telegram.py`).
-
 
